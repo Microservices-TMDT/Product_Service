@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
@@ -22,6 +24,14 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryResponse createCategory(CreateCategoryRequest categoryRequest) {
         Category category = categoryMapper.toCategory(categoryRequest);
         return categoryMapper.toCategoryResponse(categoryRepository.save(category));
+    }
 
+    @Override
+    public List<CategoryResponse> getCategories() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(categoryMapper::toCategoryResponse)
+                .toList();
     }
 }
+
