@@ -20,7 +20,7 @@ spring:
     bootstrap-servers: localhost:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       group-id: product-service
       auto-offset-reset: latest
@@ -37,3 +37,24 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+  # ---------------------------------------------------------------- Redis (L2 cache)
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+
+  # ---------------------------------------------------------------- Cache
+  cache:
+    type: caffeine   # default CacheManager = Caffeine (L1)
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=5s
+
+# ---------------------------------------------------------------- Redisson (distributed lock)
+spring.redisson:
+  config: |
+    singleServerConfig:
+      address: "redis://localhost:6379"
+      connectionMinimumIdleSize: 2
+      connectionPoolSize: 10
