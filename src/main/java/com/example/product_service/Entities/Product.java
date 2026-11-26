@@ -16,18 +16,16 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Product extends BaseEntity {
 
-    @Column(name = "category_id")
-    private String categoryId;
-
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "price")
+    private Integer price;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    @Column(name = "stock")
+    private Integer stock;
 
-    @Column(name = "status")
-    private String status = "ACTIVE";
+    @Column(name = "category_id")
+    private String categoryId;
+
 }

@@ -1,6 +1,7 @@
 package com.example.product_service.controller;
 
 import com.example.product_service.dto.request.CreateProductRequest;
+import com.example.product_service.dto.request.ProductFilter;
 import com.example.product_service.dto.response.ApiResponse;
 import com.example.product_service.dto.response.ProductResponse;
 import com.example.product_service.service.ProductService;
@@ -31,6 +32,16 @@ public class ProductController {
     public ResponseEntity<ApiResponse<List<ProductResponse>>> getProducts() {
         ApiResponse<List<ProductResponse>> response = ApiResponse.<List<ProductResponse>>builder()
                 .data(productService.getProducts())
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/search") //data vào là list -> url bị giới hạn
+    public ResponseEntity<ApiResponse<List<ProductResponse>>> searchProducts(@RequestBody ProductFilter productFilter) {
+        List<ProductResponse> productResponseList = productService.searchProducts(productFilter);
+        ApiResponse<List<ProductResponse>> response = ApiResponse.<List<ProductResponse>>builder()
+                .data(productResponseList)
+                .message("success")
                 .build();
         return ResponseEntity.ok(response);
     }

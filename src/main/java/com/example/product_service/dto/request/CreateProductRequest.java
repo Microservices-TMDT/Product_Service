@@ -1,5 +1,8 @@
 package com.example.product_service.dto.request;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 @Getter
@@ -9,14 +12,17 @@ import lombok.*;
 @Builder
 public class CreateProductRequest {
 
-    private String categoryId;
-
+    @NotEmpty
     private String name;
 
-    private String description;
+    @NotNull
+    @Positive
+    private Integer price;
 
-    private String imageUrl;
+    @NotNull
+    @Positive
+    private Integer stock;
 
-    @Builder.Default
-    private String status = "ACTIVE";
+    @NotEmpty
+    private String categoryId;
 }
